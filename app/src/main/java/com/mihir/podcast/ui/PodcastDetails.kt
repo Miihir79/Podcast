@@ -17,6 +17,7 @@ class PodcastDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPodcastDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         val title = intent.extras?.get("Title")
         val imgUrl = intent.extras?.get("Image")
         val feedUrl = intent.extras?.get("Feed")
