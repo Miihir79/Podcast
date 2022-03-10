@@ -54,4 +54,93 @@
             android:text="This is text for the podcast episode here anything can be displayed"
             android:textSize="18sp" />
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="413dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <SeekBar
+            android:id="@+id/seekBar_episode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_total"
+            app:layout_constraintStart_toEndOf="@+id/txt_current" />
+
+        <TextView
+            android:id="@+id/txt_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/gilroy_regular"
+            android:text="00:00"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/seekBar_episode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/seekBar_episode" />
+
+        <TextView
+            android:id="@+id/txt_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/gilroy_regular"
+            android:text="23:34"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/seekBar_episode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/seekBar_episode" />
+
+        <ImageButton
+            android:id="@+id/img_play"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
+            app:srcCompat="@drawable/ic_baseline_play_arrow_black"
+            tools:layout_editor_absoluteX="173dp" />
+
+        <ImageButton
+            android:id="@+id/img_prev"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:background="@null"
+            android:rotation="180"
+            app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
+            app:layout_constraintEnd_toStartOf="@+id/img_play"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_skip_next_black" />
+
+        <ImageButton
+            android:id="@+id/img_next"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_play"
+            app:srcCompat="@drawable/ic_baseline_skip_next_black" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gilroy_regular"
+            android:text="1.0X"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_next"
+            app:layout_constraintTop_toTopOf="@+id/img_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
