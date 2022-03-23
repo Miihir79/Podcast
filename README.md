@@ -9,6 +9,8 @@ An app to listen and search to podcast using the itunes api. It has an option to
 Yet to integrate media playback
 
 ## How to contribute?
+### What do you need to get started?
+#### Latest version of android studio and basic android and googling skills will get you going.
 All contributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
 
 ## Author
