@@ -12,7 +12,7 @@ Yet to integrate media playback
 ### What do you need to get started?
 #### Latest version of android studio and basic android and googling skills will get you going.
 All contributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
-#### Media player is a missing feature that can be worked on. Open an issue for the same.
+#### <a href="https://developer.android.com/guide/topics/media/mediaplayer">Media player</a> and its notification controller can be worked on. Open an issue for the same.
 
 ## Author
 Initial work: <a href="https://github.com/Miihir79">***Mihir Shah***</a> <br>
