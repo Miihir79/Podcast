@@ -11,6 +11,7 @@
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="10dp"
+        android:transitionName="img_small"
         android:src="@android:drawable/ic_menu_report_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
+        android:transitionName="title"
         android:fontFamily="@font/gilroy_semi_bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:transitionName="podName"
+        android:layout_marginStart="6dp"
         android:text="Podcast Episode Title"
-        android:fontFamily="@font/gilroy_regular"
+        android:fontFamily="@font/gilroy_semi_bold"
         app:layout_constraintTop_toBottomOf="@+id/episodeImageView"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,24 +44,32 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_Player_EpTitle">
 
-        <TextView
-            android:id="@+id/txt_Player_Description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:fontFamily="@font/gilroy_regular"
-            android:text="This is text for the podcast episode here anything can be displayed"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txt_Player_Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:transitionName="description"
+                android:fontFamily="@font/gilroy_regular"
+                android:text="This is text for the podcast episode here anything can be displayed"
+                android:textSize="18sp"/>
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="413dp"
+        android:background="#FAFAFA"
+        android:paddingTop="4dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -99,39 +111,40 @@
 
         <ImageButton
             android:id="@+id/img_play"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginBottom="4dp"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
-            app:srcCompat="@drawable/ic_baseline_play_arrow_black"
-            tools:layout_editor_absoluteX="173dp" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:srcCompat="@drawable/ic_baseline_play_arrow_black" />
 
         <ImageButton
             android:id="@+id/img_prev"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginBottom="4dp"
             android:background="@null"
             android:rotation="180"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
             app:layout_constraintEnd_toStartOf="@+id/img_play"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_skip_next_black" />
+            app:layout_constraintTop_toTopOf="@+id/img_play"
+            app:layout_constraintBottom_toBottomOf="@+id/img_play"
+            app:srcCompat="@drawable/ic_baseline_double_arrow_24" />
 
         <ImageButton
             android:id="@+id/img_next"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginBottom="4dp"
             android:background="@null"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_play"
-            app:srcCompat="@drawable/ic_baseline_skip_next_black" />
+            app:layout_constraintTop_toTopOf="@+id/img_play"
+            app:layout_constraintBottom_toBottomOf="@+id/img_play"
+            app:srcCompat="@drawable/ic_baseline_double_arrow_24" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/txt_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gilroy_regular"
@@ -142,5 +155,23 @@
             app:layout_constraintStart_toEndOf="@+id/img_next"
             app:layout_constraintTop_toTopOf="@+id/img_next" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

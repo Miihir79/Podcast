@@ -1,11 +1,13 @@
 package com.mihir.podcast.ui
 
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Explode
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mihir.podcast.adapter.SearchResultAdapter
 import com.mihir.podcast.model.SearchClass
@@ -21,8 +23,15 @@ class SearchResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this,R.color.gray)
+        with(window) {
+            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+            window.allowEnterTransitionOverlap
+        }
         supportActionBar?.hide()
+        setContentView(binding.root)
+
+
         val itunes: ItunesGet = ItunesGet.instance
         binding.searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -51,7 +60,7 @@ class SearchResult : AppCompatActivity() {
             val podcastList = podcasts?.map {
                 SearchClass(it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
             }
-            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>)
+            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>,this)
             binding.rvSearch.layoutManager = LinearLayoutManager(this)
         }catch (e: Exception){
             Log.e("TAG-mihir", "call: $e")

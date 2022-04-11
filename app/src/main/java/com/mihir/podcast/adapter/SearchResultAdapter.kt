@@ -2,18 +2,22 @@ package com.mihir.podcast.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mihir.podcast.helper.DateUtils
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.ui.PodcastDetails
 import com.mihir.podcast.ui.R
+import androidx.core.util.Pair
+import com.mihir.podcast.ui.SearchResult
 import com.mihir.podcast.ui.databinding.ItemSubscriptionBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SearchResultAdapter(val list : ArrayList<SearchClass>):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(val list: ArrayList<SearchClass>, val searchResult: SearchResult):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
     inner class ViewHolder(binding: ItemSubscriptionBinding):RecyclerView.ViewHolder(binding.root){
         val Image = binding.img
         val title = binding.txtTitle
@@ -34,10 +38,11 @@ class SearchResultAdapter(val list : ArrayList<SearchClass>):RecyclerView.Adapte
         }
         holder.view.setOnClickListener {
             val intent = Intent(holder.view.context,PodcastDetails::class.java)
-            intent.putExtra("Title",list[position].name)
-            intent.putExtra("Image",list[position].imageUrl)
-            intent.putExtra("Feed",list[position].feedUrl)
-            holder.view.context.startActivity(intent)
+            intent.putExtra("Search",list[position])
+            val pair1=  Pair.create<View, String>(holder.Image,"img_small")
+            val pair2 =  Pair.create<View, String>(holder.title,"title")
+            val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(searchResult,pair1,pair2)
+            holder.view.context.startActivity(intent,transition.toBundle())
         }
     }
 

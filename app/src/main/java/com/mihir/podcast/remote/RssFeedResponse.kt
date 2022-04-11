@@ -1,5 +1,6 @@
 package com.mihir.podcast.remote
 
+import java.io.Serializable
 import java.util.*
 
 data class RssFeedResponse(
@@ -8,7 +9,7 @@ data class RssFeedResponse(
     var summary: String = "",
     var lastUpdated: Date = Date(),
     var episodes: MutableList<EpisodeResponse>? = null
-) {
+) : Serializable{
     data class EpisodeResponse(
         var title: String? = null,
         var link: String? = null,
@@ -18,5 +19,5 @@ data class RssFeedResponse(
         var duration: String? = null,
         var url: String? = null,
         var type: String? = null
-    )
+    ):Serializable
 }
