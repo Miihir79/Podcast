@@ -1,5 +1,6 @@
 package com.mihir.podcast.adapter
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +13,23 @@ import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.ui.PodcastDetails
 import com.mihir.podcast.ui.R
 import androidx.core.util.Pair
-import com.mihir.podcast.ui.SearchResult
+import androidx.lifecycle.ViewModelProvider
+import com.mihir.podcast.model.FavViewModel
+import com.mihir.podcast.ui.MainActivity
 import com.mihir.podcast.ui.databinding.ItemSubscriptionBinding
-import java.util.*
 import kotlin.collections.ArrayList
 
-class SearchResultAdapter(val list: ArrayList<SearchClass>, val searchResult: SearchResult):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(
+    private val list: ArrayList<SearchClass>,
+    private val activity: Activity,
+    private val viewModel: FavViewModel
+):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
     inner class ViewHolder(binding: ItemSubscriptionBinding):RecyclerView.ViewHolder(binding.root){
-        val Image = binding.img
+        val image = binding.img
         val title = binding.txtTitle
         val updated = binding.txtDate
         val view = binding.root
+        val like = binding.imgLike
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +38,7 @@ class SearchResultAdapter(val list: ArrayList<SearchClass>, val searchResult: Se
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.Image.context).load(list[position].imageUrl).placeholder(R.drawable.loading).into(holder.Image)
+        Glide.with(holder.image.context).load(list[position].imageUrl).placeholder(R.drawable.loading).into(holder.image)
         holder.title.text = list[position].name
         holder.updated.text = list[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
@@ -39,10 +46,13 @@ class SearchResultAdapter(val list: ArrayList<SearchClass>, val searchResult: Se
         holder.view.setOnClickListener {
             val intent = Intent(holder.view.context,PodcastDetails::class.java)
             intent.putExtra("Search",list[position])
-            val pair1=  Pair.create<View, String>(holder.Image,"img_small")
+            val pair1=  Pair.create<View, String>(holder.image,"img_small")
             val pair2 =  Pair.create<View, String>(holder.title,"title")
-            val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(searchResult,pair1,pair2)
+            val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,pair1,pair2)
             holder.view.context.startActivity(intent,transition.toBundle())
+        }
+        holder.like.setOnClickListener {
+            viewModel.addFav(list[position])
         }
     }
 

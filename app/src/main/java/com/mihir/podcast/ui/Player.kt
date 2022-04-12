@@ -1,23 +1,16 @@
 package com.mihir.podcast.ui
 
-import android.content.DialogInterface
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.MediaPlayer
-import android.opengl.Visibility
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.SeekBar
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.os.postDelayed
-import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mihir.podcast.helper.HtmlUtils
@@ -27,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.util.concurrent.TimeUnit
 
 class Player : AppCompatActivity() {

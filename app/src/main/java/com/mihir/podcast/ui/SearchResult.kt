@@ -2,14 +2,15 @@ package com.mihir.podcast.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Explode
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mihir.podcast.adapter.SearchResultAdapter
+import com.mihir.podcast.model.FavViewModel
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.remote.ItunesGet
 import com.mihir.podcast.ui.databinding.ActivitySearchResultBinding
@@ -20,6 +21,7 @@ import java.lang.Exception
 
 class SearchResult : AppCompatActivity() {
     private lateinit var binding: ActivitySearchResultBinding
+    private lateinit var viewModel: FavViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
@@ -58,9 +60,10 @@ class SearchResult : AppCompatActivity() {
             val result = itunes.search(term)
             val podcasts = result.body()?.results
             val podcastList = podcasts?.map {
-                SearchClass(it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
+                SearchClass(0,it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
             }
-            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>,this)
+            viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
+            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>,this,viewModel)
             binding.rvSearch.layoutManager = LinearLayoutManager(this)
         }catch (e: Exception){
             Log.e("TAG-mihir", "call: $e")
