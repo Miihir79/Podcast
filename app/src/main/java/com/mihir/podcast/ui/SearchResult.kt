@@ -63,7 +63,7 @@ class SearchResult : AppCompatActivity() {
                 SearchClass(0,it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
             }
             viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
-            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>,this,viewModel)
+            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>,this,viewModel,false)
             binding.rvSearch.layoutManager = LinearLayoutManager(this)
         }catch (e: Exception){
             Log.e("TAG-mihir", "call: $e")

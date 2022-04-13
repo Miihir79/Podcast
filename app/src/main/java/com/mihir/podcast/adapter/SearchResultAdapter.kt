@@ -22,7 +22,8 @@ import kotlin.collections.ArrayList
 class SearchResultAdapter(
     private val list: ArrayList<SearchClass>,
     private val activity: Activity,
-    private val viewModel: FavViewModel
+    private val viewModel: FavViewModel,
+    private val isFavCall:Boolean
 ):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
     inner class ViewHolder(binding: ItemSubscriptionBinding):RecyclerView.ViewHolder(binding.root){
         val image = binding.img
@@ -40,6 +41,9 @@ class SearchResultAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.image.context).load(list[position].imageUrl).placeholder(R.drawable.loading).into(holder.image)
         holder.title.text = list[position].name
+        if(isFavCall){
+            holder.like.isPressed = true
+        }
         holder.updated.text = list[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
         }
@@ -52,7 +56,13 @@ class SearchResultAdapter(
             holder.view.context.startActivity(intent,transition.toBundle())
         }
         holder.like.setOnClickListener {
-            viewModel.addFav(list[position])
+
+            if(holder.like.isPressed){
+                viewModel.deleteFav(list[position])
+            }else{
+                viewModel.addFav(list[position])
+            }
+
         }
     }
 

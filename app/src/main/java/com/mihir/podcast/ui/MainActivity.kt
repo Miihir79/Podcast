@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
 
         viewModel.readAll.observe(this) { favs ->
-            binding.recyclerview.adapter = SearchResultAdapter(favs as ArrayList<SearchClass>,this,viewModel)
+            binding.recyclerview.adapter = SearchResultAdapter(favs as ArrayList<SearchClass>,this,viewModel,true)
             binding.recyclerview.layoutManager = LinearLayoutManager(this)
         }
 

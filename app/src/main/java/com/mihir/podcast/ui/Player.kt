@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit
 
 class Player : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerBinding
-    private var State:Boolean=true //(true)->paused state[image of play] ; (false)->playing state [image of pause]
-    private lateinit var PodcastURL :String
+    private var state:Boolean=true //(true)->paused state[image of play] ; (false)->playing state [image of pause]
+    private lateinit var podcastURL :String
     private var mediaPlayer : MediaPlayer?=null
     private lateinit var load:Job
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class Player : AppCompatActivity() {
 
         binding.txtPlayerEpTitle.text = episode.title
         binding.txtPlayerDescription.text = episode.description?.let { HtmlUtils.htmlToSpannable(it) }
-        PodcastURL = episode.url.toString()
+        podcastURL = episode.url.toString()
 
         load = GlobalScope.launch (Dispatchers.IO){
             mediaPlayer = MediaPlayer().apply {
@@ -56,7 +56,7 @@ class Player : AppCompatActivity() {
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .build()
                 )
-                setDataSource(PodcastURL)
+                setDataSource(podcastURL)
                 this.prepare()
             }
         }
@@ -64,7 +64,7 @@ class Player : AppCompatActivity() {
         Glide.with(binding.episodeImageView.context).load(url).into(binding.episodeImageView)
         binding.txtTotal.text = episode.duration
         binding.imgPlay.setOnClickListener {
-            if (State){
+            if (state){
                 play()
             }
             else{
@@ -117,7 +117,7 @@ class Player : AppCompatActivity() {
     }
 
     fun play(){
-        State = false
+        state = false
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_pause_24)
         binding.progressBar.visibility = View.VISIBLE // to show loading till the prepare() is ready
         load.invokeOnCompletion {// wait for prepare() to be ready
@@ -135,7 +135,7 @@ class Player : AppCompatActivity() {
                             handler.postDelayed(this, 1000)
                             if (!mediaPlayer!!.isPlaying){
                                 binding.imgPlay.setImageResource(R.drawable.ic_baseline_play_arrow_black)
-                                State = true
+                                state = true
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -148,7 +148,7 @@ class Player : AppCompatActivity() {
     }
 
     fun pause(){
-        State = true
+        state = true
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_play_arrow_black)
         mediaPlayer?.pause()
     }
@@ -161,7 +161,7 @@ class Player : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(State){
+        if(state){
             mediaPlayer?.release()
             mediaPlayer = null
             super.onBackPressed()
