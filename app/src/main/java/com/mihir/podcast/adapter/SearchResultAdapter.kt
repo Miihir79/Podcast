@@ -13,18 +13,17 @@ import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.ui.PodcastDetails
 import com.mihir.podcast.ui.R
 import androidx.core.util.Pair
-import androidx.lifecycle.ViewModelProvider
 import com.mihir.podcast.model.FavViewModel
-import com.mihir.podcast.ui.MainActivity
 import com.mihir.podcast.ui.databinding.ItemSubscriptionBinding
 import kotlin.collections.ArrayList
 
 class SearchResultAdapter(
-    private val list: ArrayList<SearchClass>,
     private val activity: Activity,
     private val viewModel: FavViewModel,
     private val isFavCall:Boolean
 ):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+    private var list= ArrayList<SearchClass>()
+
     inner class ViewHolder(binding: ItemSubscriptionBinding):RecyclerView.ViewHolder(binding.root){
         val image = binding.img
         val title = binding.txtTitle
@@ -47,17 +46,18 @@ class SearchResultAdapter(
         holder.updated.text = list[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
         }
-        holder.view.setOnClickListener {
-            val intent = Intent(holder.view.context,PodcastDetails::class.java)
-            intent.putExtra("Search",list[position])
-            val pair1=  Pair.create<View, String>(holder.image,"img_small")
-            val pair2 =  Pair.create<View, String>(holder.title,"title")
-            val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,pair1,pair2)
-            holder.view.context.startActivity(intent,transition.toBundle())
+        holder.title.setOnClickListener {
+            onclick(holder,position)
+        }
+        holder.image.setOnClickListener {
+            onclick(holder,position)
+        }
+        holder.updated.setOnClickListener {
+            onclick(holder,position)
         }
         holder.like.setOnClickListener {
 
-            if(holder.like.isPressed){
+            if(isFavCall){
                 viewModel.deleteFav(list[position])
             }else{
                 viewModel.addFav(list[position])
@@ -65,8 +65,21 @@ class SearchResultAdapter(
 
         }
     }
+    private fun onclick(holder: ViewHolder, position: Int) {
+        val intent = Intent(holder.view.context,PodcastDetails::class.java)
+        intent.putExtra("Search",list[position])
+        val pair1=  Pair.create<View, String>(holder.image,"img_small")
+        val pair2 =  Pair.create<View, String>(holder.title,"title")
+        val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,pair1,pair2)
+        holder.view.context.startActivity(intent,transition.toBundle())
+    }
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    public fun setList(newList:ArrayList<SearchClass>){
+        list = newList
+        notifyDataSetChanged()
     }
 }

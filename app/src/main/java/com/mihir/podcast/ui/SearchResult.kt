@@ -22,6 +22,7 @@ import java.lang.Exception
 class SearchResult : AppCompatActivity() {
     private lateinit var binding: ActivitySearchResultBinding
     private lateinit var viewModel: FavViewModel
+    private lateinit var myAdapter: SearchResultAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
@@ -32,7 +33,7 @@ class SearchResult : AppCompatActivity() {
         }
         supportActionBar?.hide()
         setContentView(binding.root)
-
+        binding.searchView.isIconified = false // to open keyboard in searchview
 
         val itunes: ItunesGet = ItunesGet.instance
         binding.searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
@@ -63,7 +64,9 @@ class SearchResult : AppCompatActivity() {
                 SearchClass(0,it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
             }
             viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
-            binding.rvSearch.adapter = SearchResultAdapter(podcastList as ArrayList<SearchClass>,this,viewModel,false)
+            myAdapter = SearchResultAdapter(this,viewModel,false)
+            binding.rvSearch.adapter = myAdapter
+            myAdapter.setList(podcastList as ArrayList<SearchClass>)
             binding.rvSearch.layoutManager = LinearLayoutManager(this)
         }catch (e: Exception){
             Log.e("TAG-mihir", "call: $e")

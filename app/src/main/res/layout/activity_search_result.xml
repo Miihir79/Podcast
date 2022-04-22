@@ -25,7 +25,10 @@
         android:layout_marginHorizontal="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true"
+        app:iconifiedByDefault="false"
+        android:focusableInTouchMode="true"/>
 
     <TextView
         android:id="@+id/txt_greeting"
@@ -33,6 +36,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/gilroy_regular"
         android:text="You Can Search from Thousands of Podcasts"
+        android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/rv_search"
         app:layout_constraintEnd_toEndOf="parent"

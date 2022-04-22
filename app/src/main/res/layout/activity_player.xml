@@ -16,31 +16,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_Player_title" />
+
     <TextView
         android:id="@+id/txt_Player_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gilroy_semi_bold"
+        android:paddingStart="10dp"
+        android:text="Podcast Title"
         android:textSize="30sp"
         android:transitionName="title"
-        android:fontFamily="@font/gilroy_semi_bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
-        android:text="Podcast Title"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txt_Player_EpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gilroy_semi_bold"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="Podcast Episode Title"
         android:textSize="20sp"
         android:transitionName="podName"
-        android:layout_marginStart="6dp"
-        android:text="Podcast Episode Title"
-        android:fontFamily="@font/gilroy_semi_bold"
-        app:layout_constraintTop_toBottomOf="@+id/episodeImageView"
-        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/episodeImageView" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -53,23 +58,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_Player_EpTitle">
 
-            <TextView
-                android:id="@+id/txt_Player_Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:transitionName="description"
-                android:fontFamily="@font/gilroy_regular"
-                android:text="This is text for the podcast episode here anything can be displayed"
-                android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/txt_Player_Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:fontFamily="@font/gilroy_regular"
+            android:lineSpacingExtra="1sp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:text="This is text for the podcast episode here anything can be displayed"
+            android:textSize="17.5sp"
+            android:transitionName="description" />
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:background="#FAFAFA"
-        android:paddingTop="4dp"
         android:layout_height="wrap_content"
+        android:background="#E2FFD2"
+        android:paddingTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -125,23 +133,23 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:background="@null"
-            android:rotation="180"
+            android:rotation="0"
+            app:layout_constraintBottom_toBottomOf="@+id/img_play"
             app:layout_constraintEnd_toStartOf="@+id/img_play"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_play"
-            app:layout_constraintBottom_toBottomOf="@+id/img_play"
-            app:srcCompat="@drawable/ic_baseline_double_arrow_24" />
+            app:srcCompat="@drawable/ic_baseline_replay_5_24" />
 
         <ImageButton
             android:id="@+id/img_next"
-            android:layout_width="36dp"
+            android:layout_width="40dp"
             android:layout_height="36dp"
             android:background="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/img_play"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_play"
             app:layout_constraintTop_toTopOf="@+id/img_play"
-            app:layout_constraintBottom_toBottomOf="@+id/img_play"
-            app:srcCompat="@drawable/ic_baseline_double_arrow_24" />
+            app:srcCompat="@drawable/ic_baseline_forward_5_24" />
 
         <TextView
             android:id="@+id/txt_speed"

@@ -74,7 +74,12 @@ class Player : AppCompatActivity() {
         binding.txtSpeed.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (load.isCompleted){ // just in case the prepare() is not executed
-                    mediaPlayer?.playbackParams?.speed = 4F
+                    Log.i("TAG", "onCreate: clicked")
+                    val params = mediaPlayer?.playbackParams
+                    params?.speed = 2f
+                    if (params != null) {
+                        mediaPlayer?.playbackParams = params
+                    }
                 }
             }
         }

@@ -14,6 +14,7 @@ import com.mihir.podcast.ui.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel:FavViewModel
+    private lateinit var myAdapter: SearchResultAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -27,10 +28,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
-
+        myAdapter = SearchResultAdapter(this,viewModel,true)
+        binding.recyclerview.adapter = myAdapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
         viewModel.readAll.observe(this) { favs ->
-            binding.recyclerview.adapter = SearchResultAdapter(favs as ArrayList<SearchClass>,this,viewModel,true)
-            binding.recyclerview.layoutManager = LinearLayoutManager(this)
+            myAdapter.setList(favs as ArrayList<SearchClass>)
         }
 
     }
