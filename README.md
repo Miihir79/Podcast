@@ -19,11 +19,14 @@ An app to listen and search to podcast using the itunes api. It has an option to
     <td>Podcast Details<img src="https://user-images.githubusercontent.com/66465511/164727503-d6209491-e50c-44f0-8a3d-08ed0eec528c.jpg" width="350">
     <td>Episode details <img src="https://user-images.githubusercontent.com/66465511/164727510-76880fc3-c501-4f6e-8fe5-d44403f51aea.jpg" width="350">
 </table>
+ 
+![Multiples with info](https://user-images.githubusercontent.com/66465511/164916085-1bd0e95e-1750-4564-9156-c6f88c25a9e6.png)
 
+  
 ## How to contribute?
 ### What do you need to get started?
 #### Latest version of android studio and basic android and googling skills will get you going.
-All contributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
+Allcontributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
 
 ## Author
 Initial work: <a href="https://github.com/Miihir79">***Mihir Shah***</a> <br>
