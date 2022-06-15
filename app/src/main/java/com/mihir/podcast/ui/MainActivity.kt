@@ -1,8 +1,10 @@
 package com.mihir.podcast.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +12,7 @@ import com.mihir.podcast.adapter.SearchResultAdapter
 import com.mihir.podcast.model.FavViewModel
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.ui.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -27,12 +30,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
+        viewModel = ViewModelProvider(this)[FavViewModel::class.java]
         myAdapter = SearchResultAdapter(this,viewModel,true)
         binding.recyclerview.adapter = myAdapter
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
         viewModel.readAll.observe(this) { favs ->
             myAdapter.setList(favs as ArrayList<SearchClass>)
+            binding.recyclerview.scheduleLayoutAnimation()
+            val animation: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation)
+            binding.recyclerview.layoutAnimation = animation
         }
 
     }

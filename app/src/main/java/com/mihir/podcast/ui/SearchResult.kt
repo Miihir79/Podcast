@@ -67,6 +67,7 @@ class SearchResult : AppCompatActivity() {
             myAdapter = SearchResultAdapter(this,viewModel,false)
             binding.rvSearch.adapter = myAdapter
             myAdapter.setList(podcastList as ArrayList<SearchClass>)
+            binding.rvSearch.scheduleLayoutAnimation()
             binding.rvSearch.layoutManager = LinearLayoutManager(this)
         }catch (e: Exception){
             Log.e("TAG-mihir", "call: $e")
