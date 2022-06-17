@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Podcast</string>
+    <string name="podcast_banner_image">Podcast banner image</string>
+    <string name="play_pause_button">play pause button</string>
+    <string name="go_back">go back</string>
+    <string name="go_forward">go forward</string>
+    <string name="_1_0x">1.0X</string>
+    <string name="you_can_search_from_thousands_of_podcasts">You Can Search from Thousands of Podcasts</string>
+    <string name="episodes">Episodes</string>
+    <string name="liked_podcasts">Liked Podcasts</string>
+    <string name="search_icon">search icon</string>
+    <string name="podcast_title">Podcast title</string>
+    <string name="image_like_btn">image like btn</string>
+    <string name="_00_00">00:00</string>
 </resources>

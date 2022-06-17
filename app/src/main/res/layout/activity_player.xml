@@ -15,7 +15,8 @@
         android:src="@android:drawable/ic_menu_report_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Player_title" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_Player_title"
+        android:contentDescription="@string/podcast_banner_image" />
 
     <TextView
         android:id="@+id/txt_Player_title"
@@ -24,7 +25,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/gilroy_semi_bold"
         android:paddingStart="10dp"
-        android:text="Podcast Title"
+        tools:text="Podcast Title"
         android:textSize="30sp"
         android:transitionName="title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,7 @@
         android:fontFamily="@font/gilroy_semi_bold"
         android:paddingStart="6dp"
         android:paddingEnd="6dp"
-        android:text="Podcast Episode Title"
+        tools:text="Podcast Episode Title"
         android:textSize="20sp"
         android:transitionName="podName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +68,9 @@
             android:lineSpacingExtra="1sp"
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
-            android:text="This is text for the podcast episode here anything can be displayed"
+            android:linksClickable="true"
+            android:autoLink="all"
+            tools:text="This is text for the podcast episode here anything can be displayed"
             android:textSize="17.5sp"
             android:transitionName="description" />
     </ScrollView>
@@ -99,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/gilroy_regular"
-            android:text="00:00"
+            android:text="@string/_00_00"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_episode"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/gilroy_regular"
-            android:text="23:34"
+            tools:text="23:34"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/seekBar_episode"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +129,8 @@
             app:layout_constraintBottom_toTopOf="@+id/seekBar_episode"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:srcCompat="@drawable/ic_baseline_play_arrow_black" />
+            app:srcCompat="@drawable/ic_baseline_play_arrow_black"
+            android:contentDescription="@string/play_pause_button" />
 
         <ImageButton
             android:id="@+id/img_prev"
@@ -138,7 +142,8 @@
             app:layout_constraintEnd_toStartOf="@+id/img_play"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_play"
-            app:srcCompat="@drawable/ic_baseline_replay_5_24" />
+            app:srcCompat="@drawable/ic_baseline_replay_5_24"
+            android:contentDescription="@string/go_back" />
 
         <ImageButton
             android:id="@+id/img_next"
@@ -149,14 +154,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_play"
             app:layout_constraintTop_toTopOf="@+id/img_play"
-            app:srcCompat="@drawable/ic_baseline_forward_5_24" />
+            app:srcCompat="@drawable/ic_baseline_forward_5_24"
+            android:contentDescription="@string/go_forward" />
 
         <TextView
             android:id="@+id/txt_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gilroy_regular"
-            android:text="1.0X"
+            android:text="@string/_1_0x"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_next"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -23,7 +24,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/gilroy_semi_bold"
-                android:text="Podcast Ep title"
+                tools:text="Podcast Ep title"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +38,7 @@
                 android:layout_marginEnd="1dp"
                 android:maxLines="4"
                 android:fontFamily="@font/gilroy_regular"
-                android:text="Podcast Ep description where the details are mentioned"
+                tools:text="Podcast Ep description where the details are mentioned"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txt_EpTitle"
@@ -51,7 +52,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/gilroy_regular"
-                android:text="Date"
+                tools:text="Date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_EpDetail" />
@@ -62,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/gilroy_regular"
-                android:text="Number"
+                tools:text="Number"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_EpDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txt_EpDate" />

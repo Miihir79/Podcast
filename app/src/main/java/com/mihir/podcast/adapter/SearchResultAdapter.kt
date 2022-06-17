@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -46,13 +47,7 @@ class SearchResultAdapter(
         holder.updated.text = list[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
         }
-        holder.title.setOnClickListener {
-            onclick(holder,position)
-        }
-        holder.image.setOnClickListener {
-            onclick(holder,position)
-        }
-        holder.updated.setOnClickListener {
+        holder.view.setOnClickListener {
             onclick(holder,position)
         }
         holder.like.setOnClickListener {
@@ -61,24 +56,26 @@ class SearchResultAdapter(
                 viewModel.deleteFav(list[position])
             }else{
                 viewModel.addFav(list[position])
+                holder.like.isPressed = true
+                Toast.makeText(activity,"Added to liked",Toast.LENGTH_SHORT).show()
             }
 
         }
     }
     private fun onclick(holder: ViewHolder, position: Int) {
-        val intent = Intent(holder.view.context,PodcastDetails::class.java)
+        val intent = Intent(activity,PodcastDetails::class.java)
         intent.putExtra("Search",list[position])
         val pair1=  Pair.create<View, String>(holder.image,"img_small")
         val pair2 =  Pair.create<View, String>(holder.title,"title")
         val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,pair1,pair2)
-        holder.view.context.startActivity(intent,transition.toBundle())
+        activity.startActivity(intent,transition.toBundle())
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    public fun setList(newList:ArrayList<SearchClass>){
+    fun setList(newList:ArrayList<SearchClass>){
         list = newList
         notifyDataSetChanged()
     }

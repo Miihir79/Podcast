@@ -16,10 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mihir.podcast.helper.HtmlUtils
 import com.mihir.podcast.remote.RssFeedResponse
 import com.mihir.podcast.ui.databinding.ActivityPlayerBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.lang.Runnable
 import java.util.concurrent.TimeUnit
 
 class Player : AppCompatActivity() {
@@ -30,12 +28,12 @@ class Player : AppCompatActivity() {
     private lateinit var load:Job
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this,R.color.gray)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         with(window) {
+            statusBarColor = ContextCompat.getColor(context,R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-            window.allowReturnTransitionOverlap
-
+            allowReturnTransitionOverlap
+            allowEnterTransitionOverlap
         }
         supportActionBar?.hide()
         setContentView(binding.root)
@@ -48,7 +46,7 @@ class Player : AppCompatActivity() {
         binding.txtPlayerDescription.text = episode.description?.let { HtmlUtils.htmlToSpannable(it) }
         podcastURL = episode.url.toString()
 
-        load = GlobalScope.launch (Dispatchers.IO){
+        load = CoroutineScope(Dispatchers.IO).launch{
             mediaPlayer = MediaPlayer().apply {
                 setAudioAttributes(
                     AudioAttributes.Builder()
@@ -103,9 +101,9 @@ class Player : AppCompatActivity() {
 
         binding.imgPrev.setOnClickListener {
             if (load.isCompleted){
-                val newtime = mediaPlayer!!.currentPosition - 5000
-                if (newtime>0){
-                    mediaPlayer!!.seekTo(newtime)
+                val newTime = mediaPlayer!!.currentPosition - 5000
+                if (newTime>0){
+                    mediaPlayer!!.seekTo(newTime)
                 }else{
                     mediaPlayer!!.seekTo(0)
                 }
@@ -113,15 +111,15 @@ class Player : AppCompatActivity() {
         }
         binding.imgNext.setOnClickListener {
             if (load.isCompleted){
-                val newtime = mediaPlayer!!.currentPosition + 5000
-                if (newtime<mediaPlayer!!.duration){
-                    mediaPlayer!!.seekTo(newtime)
+                val newTime = mediaPlayer!!.currentPosition + 5000
+                if (newTime<mediaPlayer!!.duration){
+                    mediaPlayer!!.seekTo(newTime)
                 }
             }
         }
     }
 
-    fun play(){
+    private fun play(){
         state = false
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_pause_24)
         binding.progressBar.visibility = View.VISIBLE // to show loading till the prepare() is ready
@@ -152,13 +150,13 @@ class Player : AppCompatActivity() {
 
     }
 
-    fun pause(){
+    private fun pause(){
         state = true
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_play_arrow_black)
         mediaPlayer?.pause()
     }
 
-    fun convert(duration:Int): String { // to convert millsec to minutes and seconds
+    fun convert(duration:Int): String { // to convert mill sec to minutes and seconds
         return String.format("%02d:%02d",TimeUnit.MILLISECONDS.toMinutes(duration.toLong()),
             TimeUnit.MILLISECONDS.toSeconds(duration.toLong()) -
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration.toLong()))
@@ -173,12 +171,12 @@ class Player : AppCompatActivity() {
         }else{
             MaterialAlertDialogBuilder(this).setTitle("Stop the player?")
                 .setMessage("Going Back will stop the podcast, do you still want to go back?")
-                .setPositiveButton("Yes") { dialogInterface, i ->
+                .setPositiveButton("Yes") { _, _ ->
                     mediaPlayer?.release()
                     mediaPlayer = null
                     super.onBackPressed()
                 }
-                .setNegativeButton("No"){dialoge,i->
+                .setNegativeButton("No"){ _, _ ->
                 }
                 .create()
                 .show()

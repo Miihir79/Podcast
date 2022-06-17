@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:transitionName="img_small"
-                android:contentDescription="banner image of podcast"
+                android:contentDescription="@string/podcast_banner_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
                 android:fontFamily="@font/gilroy_semi_bold"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
-                android:text="Title of Podcast"
+                tools:text="Title of Podcast"
                 android:textSize="22sp"
                 android:transitionName="title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,9 @@
                     android:fontFamily="@font/gilroy_regular"
                     android:lineSpacingExtra="1sp"
                     android:paddingStart="2dp"
-                    android:text="Details of the podcast"
+                    android:linksClickable="true"
+                    android:autoLink="all"
+                    tools:text="Details of the podcast"
                     android:textSize="15.5sp" />
             </androidx.core.widget.NestedScrollView>
 
@@ -89,7 +91,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/gilroy_semi_bold"
-                android:text="Episodes"
+                android:text="@string/episodes"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nestedscroll" />
@@ -100,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="#FAFAFA"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/episodes" />
