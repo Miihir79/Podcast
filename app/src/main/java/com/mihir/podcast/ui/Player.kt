@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -21,14 +22,28 @@ import java.lang.Runnable
 import java.util.concurrent.TimeUnit
 
 class Player : AppCompatActivity() {
-    private lateinit var binding: ActivityPlayerBinding
+    private val binding by lazy { ActivityPlayerBinding.inflate(layoutInflater) }
     private var state:Boolean=true //(true)->paused state[image of play] ; (false)->playing state [image of pause]
     private lateinit var podcastURL :String
     private var mediaPlayer : MediaPlayer?=null
-    private lateinit var load:Job
+    private val load by lazy {
+        CoroutineScope(Dispatchers.IO).launch{
+            mediaPlayer = MediaPlayer().apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+                )
+            }
+            kotlin.runCatching {
+                mediaPlayer?.setDataSource(podcastURL)
+                mediaPlayer?.prepare()
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlayerBinding.inflate(layoutInflater)
         with(window) {
             statusBarColor = ContextCompat.getColor(context,R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
@@ -46,21 +61,10 @@ class Player : AppCompatActivity() {
         binding.txtPlayerDescription.text = episode.description?.let { HtmlUtils.htmlToSpannable(it) }
         podcastURL = episode.url.toString()
 
-        load = CoroutineScope(Dispatchers.IO).launch{
-            mediaPlayer = MediaPlayer().apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
-                )
-                setDataSource(podcastURL)
-                this.prepare()
-            }
-        }
         binding.txtPlayerTitle.text = podName
         Glide.with(binding.episodeImageView.context).load(url).into(binding.episodeImageView)
         binding.txtTotal.text = episode.duration
+
         binding.imgPlay.setOnClickListener {
             if (state){
                 play()
@@ -119,6 +123,13 @@ class Player : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(!load.isCompleted){
+            load
+        }
+    }
+
     private fun play(){
         state = false
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_pause_24)
@@ -129,7 +140,7 @@ class Player : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 binding.seekBarEpisode.progress = mediaPlayer!!.currentPosition
                 binding.seekBarEpisode.max = mediaPlayer!!.duration
-                val handler = Handler()
+                val handler = Handler(Looper.getMainLooper())
                 handler.postDelayed(object : Runnable { // to update the values of seekbar and curr time continually
                     override fun run() {
                         try {
@@ -163,6 +174,13 @@ class Player : AppCompatActivity() {
         )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.pause()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
     override fun onBackPressed() {
         if(state){
             mediaPlayer?.release()
@@ -181,6 +199,5 @@ class Player : AppCompatActivity() {
                 .create()
                 .show()
         }
-
     }
 }

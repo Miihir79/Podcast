@@ -19,12 +19,11 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class SearchResult : AppCompatActivity() {
-    private lateinit var binding: ActivitySearchResultBinding
+    private val binding by lazy { ActivitySearchResultBinding.inflate(layoutInflater)}
     private val viewModel: FavViewModel by lazy { ViewModelProvider(this)[FavViewModel::class.java] }
-    private lateinit var myAdapter: SearchResultAdapter
+    private val myAdapter by lazy {  SearchResultAdapter(this,viewModel,false)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySearchResultBinding.inflate(layoutInflater)
         with(window) {
             statusBarColor = ContextCompat.getColor(context,R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
@@ -65,7 +64,6 @@ class SearchResult : AppCompatActivity() {
                 SearchClass(0,it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
             }
             binding.progressSearch.visibility = View.GONE
-            myAdapter = SearchResultAdapter(this,viewModel,false)
             binding.rvSearch.adapter = myAdapter
             myAdapter.setList(podcastList as ArrayList<SearchClass>)
             binding.rvSearch.scheduleLayoutAnimation()

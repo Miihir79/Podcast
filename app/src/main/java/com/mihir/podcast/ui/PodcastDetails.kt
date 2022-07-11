@@ -14,12 +14,11 @@ import com.mihir.podcast.ui.databinding.ActivityPodcastDetailsBinding
 import kotlinx.coroutines.*
 
 class PodcastDetails : AppCompatActivity() {
-    private lateinit var binding: ActivityPodcastDetailsBinding
+    private val binding by lazy { ActivityPodcastDetailsBinding.inflate(layoutInflater) }
     private lateinit var imgUrl:String
     private lateinit var response:RssFeedResponse
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPodcastDetailsBinding.inflate(layoutInflater)
         with(window) {
             statusBarColor = ContextCompat.getColor(context,R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)

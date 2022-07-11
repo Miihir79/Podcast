@@ -11,14 +11,13 @@ import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.ui.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val viewModel:FavViewModel by lazy { ViewModelProvider(this)[FavViewModel::class.java] }
-    private lateinit var myAdapter: SearchResultAdapter
+    private val myAdapter by lazy { SearchResultAdapter(this,viewModel,true)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this,R.color.gray)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.imgSearch.setOnClickListener {
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        myAdapter = SearchResultAdapter(this,viewModel,true)
         binding.recyclerview.adapter = myAdapter
         viewModel.readAll.observe(this) { favs ->
             myAdapter.setList(favs as ArrayList<SearchClass>)
