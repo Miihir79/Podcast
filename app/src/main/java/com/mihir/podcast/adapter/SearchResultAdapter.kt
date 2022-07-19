@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -41,8 +42,10 @@ class SearchResultAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.image.context).load(list[position].imageUrl).placeholder(R.drawable.loading).into(holder.image)
         holder.title.text = list[position].name
-        if(isFavCall){
-            holder.like.isPressed = true
+        if(list[position].isLiked){
+            holder.like.background = AppCompatResources.getDrawable(activity,R.drawable.iosheart)
+        }else{
+            holder.like.background = AppCompatResources.getDrawable(activity,R.drawable.ic_icon_ionic_md_heart_empty)
         }
         holder.updated.text = list[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
@@ -51,15 +54,17 @@ class SearchResultAdapter(
             onclick(holder,position)
         }
         holder.like.setOnClickListener {
-
+            val updated = list[position]
             if(isFavCall){
+                updated.isLiked = false
                 viewModel.deleteFav(list[position])
+                removeFromList(position)
             }else{
+                updated.isLiked = true
                 viewModel.addFav(list[position])
-                holder.like.isPressed = true
                 Toast.makeText(activity,"Added to liked",Toast.LENGTH_SHORT).show()
             }
-
+            updateList(position,updated)
         }
     }
     private fun onclick(holder: ViewHolder, position: Int) {
@@ -78,5 +83,14 @@ class SearchResultAdapter(
     fun setList(newList:ArrayList<SearchClass>){
         list = newList
         notifyDataSetChanged()
+    }
+
+    fun updateList(position:Int, new :SearchClass){
+        list[position] = new
+        notifyItemChanged(position,list)
+    }
+
+    fun removeFromList(position: Int){
+        notifyItemRemoved(position)
     }
 }
