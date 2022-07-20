@@ -60,9 +60,14 @@ class SearchResultAdapter(
                 viewModel.deleteFav(list[position])
                 removeFromList(position)
             }else{
-                updated.isLiked = true
-                viewModel.addFav(list[position])
-                Toast.makeText(activity,"Added to liked",Toast.LENGTH_SHORT).show()
+                if (list[position].isLiked){
+                    updated.isLiked = false
+                    viewModel.deleteFav(list[position])
+                }else{
+                    updated.isLiked = true
+                    viewModel.addFav(list[position])
+                    Toast.makeText(activity,"Added to liked",Toast.LENGTH_SHORT).show()
+                }
             }
             updateList(position,updated)
         }
