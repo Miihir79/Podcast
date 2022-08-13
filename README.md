@@ -26,7 +26,7 @@ An app to listen and search to podcast using the itunes api. It has an option to
 ## How to contribute?
 ### What do you need to get started?
 #### Latest version of android studio and basic android and googling skills will get you going.
-Allcontributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
+All contributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
 
 ## Author
 Initial work: <a href="https://github.com/Miihir79">***Mihir Shah***</a> <br>
