@@ -87,7 +87,7 @@ class SearchResultAdapter(
 
     fun setList(newList:ArrayList<SearchClass>){
         list = newList
-        notifyItemRangeInserted(0,list.size)
+        notifyDataSetChanged()
     }
 
     private fun updateList(position:Int, new :SearchClass){
