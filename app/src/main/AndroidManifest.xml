@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Podcast">
+        android:theme="@style/Theme.App.Splash">
         <activity
-            android:name=".SearchResult"
+            android:name=".search.SearchResult"
             android:exported="false" />
         <activity
             android:name=".Player"
@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.App.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

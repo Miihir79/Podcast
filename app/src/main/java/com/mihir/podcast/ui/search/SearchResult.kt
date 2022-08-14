@@ -1,8 +1,7 @@
-package com.mihir.podcast.ui
+package com.mihir.podcast.ui.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.SearchView
@@ -12,20 +11,21 @@ import com.mihir.podcast.adapter.SearchResultAdapter
 import com.mihir.podcast.model.FavViewModel
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.remote.ItunesGet
+import com.mihir.podcast.ui.R
 import com.mihir.podcast.ui.databinding.ActivitySearchResultBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class SearchResult : AppCompatActivity() {
     private val binding by lazy { ActivitySearchResultBinding.inflate(layoutInflater)}
     private val viewModel: FavViewModel by lazy { ViewModelProvider(this)[FavViewModel::class.java] }
+    private val viewModelSearch: SearchResultViewModel by lazy { ViewModelProvider(this)[SearchResultViewModel::class.java] }
     private val myAdapter by lazy {  SearchResultAdapter(this,viewModel,false)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(window) {
-            statusBarColor = ContextCompat.getColor(context,R.color.gray)
+            statusBarColor = ContextCompat.getColor(context, R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
             allowEnterTransitionOverlap
             allowReturnTransitionOverlap
@@ -36,11 +36,11 @@ class SearchResult : AppCompatActivity() {
 
         val itunes: ItunesGet = ItunesGet.instance
         binding.searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
+            override fun onQueryTextSubmit(text: String?): Boolean {
                 CoroutineScope(Dispatchers.Main).launch {
-                    if (p0 != null) {
+                    if (text != null) {
                         binding.progressSearch.visibility = View.VISIBLE
-                        call(itunes,p0)
+                        viewModelSearch.searchPodcast(itunes,text)
                         binding.searchView.clearFocus()
                         binding.txtGreeting.visibility = View.GONE
                     }
@@ -51,25 +51,16 @@ class SearchResult : AppCompatActivity() {
             override fun onQueryTextChange(p0: String?): Boolean {
                 return false
             }
-
         })
 
-    }
-
-    private suspend fun call(itunes: ItunesGet,term:String){
-        try{
-            val result = itunes.search(term)
-            val podcasts = result.body()?.results
-            val podcastList = podcasts?.map {
-                SearchClass(0,it.collectionCensoredName,it.releaseDate,it.artworkUrl600,it.feedUrl)
+        viewModelSearch.searchResultData.observe(this){
+            val podcastList = it.map { Podcast->
+                SearchClass(0,Podcast.collectionCensoredName,Podcast.releaseDate,Podcast.artworkUrl600,Podcast.feedUrl)
             }
             binding.progressSearch.visibility = View.GONE
             binding.rvSearch.adapter = myAdapter
             myAdapter.setList(podcastList as ArrayList<SearchClass>)
             binding.rvSearch.scheduleLayoutAnimation()
-        }catch (e: Exception){
-            Log.e("TAG-mihir", "call: $e")
         }
-
     }
 }

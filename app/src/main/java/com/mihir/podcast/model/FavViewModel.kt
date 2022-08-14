@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class FavViewModel(application: Application):AndroidViewModel(application) {
     var dao = FavDatabase.getDatabase(application).FavDao()
-    val readAll:LiveData<List<SearchClass>> = dao.getFavs()
+    val readAllFavPodcast:LiveData<List<SearchClass>> = dao.getFavs()
 
     fun addFav(searchClass: SearchClass){
         viewModelScope.launch {

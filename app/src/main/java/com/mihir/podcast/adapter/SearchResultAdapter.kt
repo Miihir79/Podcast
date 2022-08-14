@@ -87,15 +87,15 @@ class SearchResultAdapter(
 
     fun setList(newList:ArrayList<SearchClass>){
         list = newList
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0,list.size)
     }
 
-    fun updateList(position:Int, new :SearchClass){
+    private fun updateList(position:Int, new :SearchClass){
         list[position] = new
         notifyItemChanged(position,list)
     }
 
-    fun removeFromList(position: Int){
+    private fun removeFromList(position: Int){
         notifyItemRemoved(position)
     }
 }
