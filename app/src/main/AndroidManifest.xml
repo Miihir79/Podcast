@@ -14,13 +14,16 @@
         android:theme="@style/Theme.App.Splash">
         <activity
             android:name=".search.SearchResult"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Podcast"/>
         <activity
             android:name=".Player"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Podcast"/>
         <activity
             android:name=".PodcastDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Podcast"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
