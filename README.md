@@ -22,7 +22,16 @@ An app to listen and search to podcast using the itunes api. It has an option to
  
 ![Multiples with info](https://user-images.githubusercontent.com/66465511/164916085-1bd0e95e-1750-4564-9156-c6f88c25a9e6.png)
 
-  
+Here I have used MVVM and R8 optimizations as well
+
+#### R8 optimizations result
+  <table>
+  <tr>
+    <td>Before <br> <img src="https://user-images.githubusercontent.com/66465511/184552175-70b6ad18-348c-4f87-8212-dfa719cd616c.jpg" width="250">
+    <td>After <br> <img src="https://user-images.githubusercontent.com/66465511/184552171-3fa4e1e7-fac9-4814-8772-1db702c1f1c1.jpg" width="250">
+ </table>
+    
+
 ## How to contribute?
 ### What do you need to get started?
 #### Latest version of android studio and basic android and googling skills will get you going.
