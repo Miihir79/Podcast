@@ -1,9 +1,11 @@
 package com.mihir.podcast.model
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
+@Keep
 @Entity(tableName = "fav_table")
 data class SearchClass(
     @PrimaryKey(autoGenerate = true)
