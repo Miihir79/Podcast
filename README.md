@@ -1,11 +1,10 @@
-# Podcast
+![Multiples with info](https://user-images.githubusercontent.com/66465511/164916085-1bd0e95e-1750-4564-9156-c6f88c25a9e6.png)
+# **Podcast App**
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 <p>
 <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white"/>  
 <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white"/>
 </p>
-
-![PodcastAppBannerBlue](https://user-images.githubusercontent.com/66465511/164915047-c4db1611-133a-4894-93ec-240cbe4fbda0.png)
 
 
 An app to listen and search to podcast using the itunes api. It has an option to search for a podcast.
@@ -19,8 +18,10 @@ An app to listen and search to podcast using the itunes api. It has an option to
     <td>Podcast Details<img src="https://user-images.githubusercontent.com/66465511/164727503-d6209491-e50c-44f0-8a3d-08ed0eec528c.jpg" width="350">
     <td>Episode details <img src="https://user-images.githubusercontent.com/66465511/164727510-76880fc3-c501-4f6e-8fe5-d44403f51aea.jpg" width="350">
 </table>
- 
-![Multiples with info](https://user-images.githubusercontent.com/66465511/164916085-1bd0e95e-1750-4564-9156-c6f88c25a9e6.png)
+
+### Features of the App
+![PodcastAppBannerBlue](https://user-images.githubusercontent.com/66465511/164915047-c4db1611-133a-4894-93ec-240cbe4fbda0.png) 
+
 
 Here I have used MVVM and R8 optimizations as well
 
