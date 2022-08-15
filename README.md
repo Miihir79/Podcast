@@ -30,7 +30,10 @@ Here I have used MVVM and R8 optimizations as well
     <td>Before <br> <img src="https://user-images.githubusercontent.com/66465511/184552175-70b6ad18-348c-4f87-8212-dfa719cd616c.jpg" width="250">
     <td>After <br> <img src="https://user-images.githubusercontent.com/66465511/184552171-3fa4e1e7-fac9-4814-8772-1db702c1f1c1.jpg" width="250">
  </table>
-    
+ 
+ 
+ ### MAD Scorecard
+![summary](https://user-images.githubusercontent.com/66465511/184683480-0de942f3-2f02-4ebb-b7be-cce129230c43.png)
 
 ## How to contribute?
 ### What do you need to get started?
