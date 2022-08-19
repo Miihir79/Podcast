@@ -36,6 +36,20 @@ Here I have used MVVM and R8 optimizations as well
  ### MAD Scorecard
 ![summary](https://user-images.githubusercontent.com/66465511/184683480-0de942f3-2f02-4ebb-b7be-cce129230c43.png)
 
+### Package Structure
+    
+    com.mihir.podcast    # Root Package
+    .
+    ├── adapter             # For recyclerview
+    |
+    ├── helper              # Utility Classes
+    |
+    ├── remote              # Room DB, and its related classes
+    |
+    ├── ui                  # UI/View layer
+    |   ├── search          # Search screen related classes & views
+    
+    
 ## How to contribute?
 ### What do you need to get started?
 #### Latest version of android studio and basic android and googling skills will get you going.
