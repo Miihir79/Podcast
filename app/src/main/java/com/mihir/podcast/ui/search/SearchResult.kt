@@ -34,13 +34,13 @@ class SearchResult : AppCompatActivity() {
         setContentView(binding.root)
         binding.searchView.isIconified = false // to open keyboard in search view
 
-        val itunes: ItunesGet = ItunesGet.instance
+
         binding.searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(text: String?): Boolean {
                 CoroutineScope(Dispatchers.Main).launch {
                     if (text != null) {
                         binding.progressSearch.visibility = View.VISIBLE
-                        viewModelSearch.searchPodcast(itunes,text)
+                        viewModelSearch.searchPodcast(text)
                         binding.searchView.clearFocus()
                         binding.txtGreeting.visibility = View.GONE
                     }

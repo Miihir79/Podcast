@@ -9,8 +9,9 @@ class SearchResultViewModel: ViewModel() {
 
     val searchResultData: MutableLiveData<List<ResponseClass.Podcast>> = MutableLiveData()
 
-    suspend fun searchPodcast(itunes: ItunesGet, term:String){
+    suspend fun searchPodcast(term:String){
         try {
+            val itunes: ItunesGet = ItunesGet.instance
             val result = itunes.search(term)
             searchResultData.postValue(result.body()?.results)
         }

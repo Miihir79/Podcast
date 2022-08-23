@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private val BASE_URL ="https://itunes.apple.com"
+private const val BASE_URL ="https://itunes.apple.com"
 interface ItunesGet {
     @GET("/search?media=podcast")
     suspend fun search(@Query("term") term:String):
