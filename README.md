@@ -46,8 +46,8 @@ Here I have used MVVM and R8 optimizations as well
     |
     ├── remote              # Room DB, and its related classes
     |
-    ├── ui                  # UI/View layer
-    |   ├── search          # Search screen related classes & views
+    └── ui                  # UI/View layer
+        └── search          # Search screen related classes & views
     
     
 ## How to contribute?
