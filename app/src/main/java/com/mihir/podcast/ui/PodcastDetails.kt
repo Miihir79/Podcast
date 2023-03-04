@@ -1,12 +1,18 @@
 package com.mihir.podcast.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import com.bumptech.glide.Glide
+import com.mihir.podcast.INTENT_KEY_EPISODE
+import com.mihir.podcast.INTENT_KEY_NAME
 import com.mihir.podcast.INTENT_KEY_SEARCH
+import com.mihir.podcast.INTENT_KEY_URL
 import com.mihir.podcast.adapter.EpisodesAdapter
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.remote.RssFeedResponse
@@ -41,6 +47,7 @@ class PodcastDetails : AppCompatActivity() {
         val feedUrl = intent.feedUrl
         Glide.with(this).load(imgUrl).into(binding.imgVPodcastImg)
         binding.txtPodcastTitle.text = title
+
         CoroutineScope(Dispatchers.Main).launch {
             binding.progressBar2.visibility = View.VISIBLE
             val temp = podcastDetails(feedUrl.toString())
@@ -49,7 +56,19 @@ class PodcastDetails : AppCompatActivity() {
                 response = temp
                 binding.txtDetail.text = response.description
                 binding.rVEpisodes.adapter =
-                    EpisodesAdapter(response, imgUrl, binding.imgVPodcastImg, this@PodcastDetails, binding.txtPodcastTitle)
+                    EpisodesAdapter(response) { episode, title, desc ->
+                        val intentTransition = Intent(this@PodcastDetails, Player::class.java)
+                        intentTransition.putExtra(INTENT_KEY_NAME, response.title)
+                        intentTransition.putExtra(INTENT_KEY_EPISODE, episode)
+                        intentTransition.putExtra(INTENT_KEY_URL, imgUrl)
+                        val pair1 = Pair.create<View, String>(binding.imgVPodcastImg, "img_small")
+                        val pair2 = Pair.create<View, String>(binding.txtPodcastTitle, "title")
+                        val pair3 = Pair.create<View, String>(title, "podName")
+                        val pair4 = Pair.create<View, String>(desc, "description")
+                        val transition =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(this@PodcastDetails, pair1, pair2, pair3, pair4)
+                        startActivity(intentTransition, transition.toBundle())
+                    }
             }
         }
     }

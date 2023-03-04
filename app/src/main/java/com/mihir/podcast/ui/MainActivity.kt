@@ -34,12 +34,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SearchResult::class.java)
             startActivity(intent)
         }
-        myAdapter = SearchResultAdapter(true,{ searchItem, pair1, pair2 ->
+        myAdapter = SearchResultAdapter(true, { searchItem, pair1, pair2 ->
             val intent = Intent(this, PodcastDetails::class.java)
             intent.putExtra(INTENT_KEY_SEARCH, searchItem)
             val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2)
             startActivity(intent, transition.toBundle())
-        },{ searchItem, action ->
+        }, { searchItem, action ->
             when (action) {
                 USER_ACTION_ADD_LIKED_ITEM -> {
                     viewModel.addFav(searchItem)

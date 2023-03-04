@@ -19,7 +19,7 @@ import com.mihir.podcast.ui.databinding.ItemSubscriptionBinding
 class SearchResultAdapter(
     private val isFavCall: Boolean,
     private val onItemClicked: ((searchItem: SearchClass, pair1: Pair<View, String>, pair2: Pair<View, String>) -> Unit),
-    private val onLikeButtonClicked: ((searchItem:SearchClass, action:String) -> Unit)
+    private val onLikeButtonClicked: ((searchItem: SearchClass, action: String) -> Unit)
 ) : ListAdapter<SearchClass, SearchResultAdapter.ViewHolder>(ItemCallback) {
 
     object ItemCallback : DiffUtil.ItemCallback<SearchClass>() {
@@ -48,7 +48,8 @@ class SearchResultAdapter(
         if (currentList[position].isLiked) {
             holder.like.background = AppCompatResources.getDrawable(holder.itemView.context, R.drawable.iosheart)
         } else {
-            holder.like.background = AppCompatResources.getDrawable(holder.itemView.context, R.drawable.ic_icon_ionic_md_heart_empty)
+            holder.like.background =
+                AppCompatResources.getDrawable(holder.itemView.context, R.drawable.ic_icon_ionic_md_heart_empty)
         }
         holder.updated.text = currentList[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
