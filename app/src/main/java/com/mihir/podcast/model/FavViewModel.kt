@@ -6,17 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class FavViewModel(application: Application):AndroidViewModel(application) {
-    var dao = FavDatabase.getDatabase(application).FavDao()
-    val readAllFavPodcast:LiveData<List<SearchClass>> = dao.getFavs()
+class FavViewModel(application: Application) : AndroidViewModel(application) {
+    var dao = FavDatabase.getDatabase(application).favDao()
+    val readAllFavPodcast: LiveData<List<SearchClass>> = dao.getFavs()
 
-    fun addFav(searchClass: SearchClass){
+    fun addFav(searchClass: SearchClass) {
         viewModelScope.launch {
             dao.addFav(searchClass)
         }
     }
 
-    fun deleteFav(searchClass: SearchClass){
+    fun deleteFav(searchClass: SearchClass) {
         viewModelScope.launch {
             dao.deleteFav(searchClass)
         }

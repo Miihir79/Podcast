@@ -1,9 +1,9 @@
 package com.mihir.podcast.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.mihir.podcast.adapter.EpisodesAdapter
@@ -11,16 +11,19 @@ import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.remote.RssFeedResponse
 import com.mihir.podcast.remote.RssFeedService
 import com.mihir.podcast.ui.databinding.ActivityPodcastDetailsBinding
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PodcastDetails : AppCompatActivity() {
     private val binding by lazy { ActivityPodcastDetailsBinding.inflate(layoutInflater) }
-    private lateinit var imgUrl:String
-    private lateinit var response:RssFeedResponse
+    private lateinit var imgUrl: String
+    private lateinit var response: RssFeedResponse
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(window) {
-            statusBarColor = ContextCompat.getColor(context,R.color.gray)
+            statusBarColor = ContextCompat.getColor(context, R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
             allowReturnTransitionOverlap
             allowEnterTransitionOverlap
@@ -42,7 +45,8 @@ class PodcastDetails : AppCompatActivity() {
                 binding.progressBar2.visibility = View.GONE
                 response = temp
                 binding.txtDetail.text = response.description
-                binding.rVEpisodes.adapter = EpisodesAdapter(response,imgUrl,binding.imgVPodcastImg,this@PodcastDetails,binding.txtPodcastTitle)
+                binding.rVEpisodes.adapter =
+                    EpisodesAdapter(response, imgUrl, binding.imgVPodcastImg, this@PodcastDetails, binding.txtPodcastTitle)
             }
         }
     }

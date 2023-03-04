@@ -23,8 +23,8 @@ class EpisodesAdapter(
     var imgVPodcastImg: ImageView,
     var podcastDetails: PodcastDetails,
     var txtPodcastTitle: TextView
-):RecyclerView.Adapter<EpisodesAdapter.ViewHolder>() {
-    inner class ViewHolder(binding: ItemEpisodeBinding):RecyclerView.ViewHolder(binding.root){
+) : RecyclerView.Adapter<EpisodesAdapter.ViewHolder>() {
+    inner class ViewHolder(binding: ItemEpisodeBinding) : RecyclerView.ViewHolder(binding.root) {
         val title = binding.txtEpTitle
         val description = binding.txtEpDetail
         val date = binding.txtEpDate
@@ -32,13 +32,12 @@ class EpisodesAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemEpisodeBinding.inflate(LayoutInflater.from(parent.context),
-            parent,false))
+        return ViewHolder(ItemEpisodeBinding.inflate(LayoutInflater.from(parent.context), parent,false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = list.episodes?.get(position)?.title
-        holder.description.text = HtmlUtils.htmlToSpannable(list.episodes?.get(position)?.description?:"")
+        holder.description.text = HtmlUtils.htmlToSpannable(list.episodes?.get(position)?.description ?: "")
         holder.date.text = list.episodes?.get(position)?.pubDate.let {
             DateUtils.dateToShortDate(Date(it))
         }
@@ -46,23 +45,18 @@ class EpisodesAdapter(
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, Player::class.java)
             val episode = list.episodes?.get(position)
-            intent.putExtra("name",list.title)
-            intent.putExtra("episode",episode)
-            intent.putExtra("url",Url)
-            val pair1=  Pair.create<View, String>(imgVPodcastImg,"img_small")
-            val pair2 =  Pair.create<View, String>(txtPodcastTitle,"title")
-            val pair3 =  Pair.create<View, String>(holder.title,"podName")
-            val pair4 =  Pair.create<View, String>(holder.description,"description")
-            val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(podcastDetails,pair1,pair2,pair3,pair4)
-            holder.itemView.context.startActivity(intent,transition.toBundle())
+            intent.putExtra("name", list.title)
+            intent.putExtra("episode", episode)
+            intent.putExtra("url", Url)
+            val pair1 = Pair.create<View, String>(imgVPodcastImg, "img_small")
+            val pair2 = Pair.create<View, String>(txtPodcastTitle, "title")
+            val pair3 = Pair.create<View, String>(holder.title, "podName")
+            val pair4 = Pair.create<View, String>(holder.description, "description")
+            val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(podcastDetails, pair1, pair2, pair3, pair4)
+            holder.itemView.context.startActivity(intent, transition.toBundle())
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (list.episodes?.isNotEmpty() == true){
-            list.episodes!!.size
-        } else{
-            0
-        }
-    }
+    override fun getItemCount() = list.episodes?.size ?: 0
+
 }

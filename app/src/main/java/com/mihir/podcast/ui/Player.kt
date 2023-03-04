@@ -3,7 +3,6 @@ package com.mihir.podcast.ui
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,23 +10,25 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mihir.podcast.helper.HtmlUtils
 import com.mihir.podcast.remote.RssFeedResponse
 import com.mihir.podcast.ui.databinding.ActivityPlayerBinding
-import kotlinx.coroutines.*
-import java.lang.Runnable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class Player : AppCompatActivity() {
     private val binding by lazy { ActivityPlayerBinding.inflate(layoutInflater) }
-    private var state:Boolean=true //(true)->paused state[image of play] ; (false)->playing state [image of pause]
-    private lateinit var podcastURL :String
-    private var mediaPlayer : MediaPlayer?=null
+    private var state: Boolean = true //(true)->paused state[image of play] ; (false)->playing state [image of pause]
+    private lateinit var podcastURL: String
+    private var mediaPlayer: MediaPlayer? = null
     private val load by lazy {
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
             mediaPlayer = MediaPlayer().apply {
                 setAudioAttributes(
                     AudioAttributes.Builder()
@@ -42,10 +43,11 @@ class Player : AppCompatActivity() {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(window) {
-            statusBarColor = ContextCompat.getColor(context,R.color.gray)
+            statusBarColor = ContextCompat.getColor(context, R.color.gray)
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
             allowReturnTransitionOverlap
             allowEnterTransitionOverlap
@@ -66,16 +68,15 @@ class Player : AppCompatActivity() {
         binding.txtTotal.text = episode.duration
 
         binding.imgPlay.setOnClickListener {
-            if (state){
+            if (state) {
                 play()
-            }
-            else{
+            } else {
                 pause()
             }
         }
         binding.txtSpeed.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (load.isCompleted){ // just in case the prepare() is not executed
+                if (load.isCompleted) { // just in case the prepare() is not executed
                     Log.i("TAG", "onCreate: clicked")
                     val params = mediaPlayer?.playbackParams
                     params?.speed = 2f
@@ -86,9 +87,9 @@ class Player : AppCompatActivity() {
             }
         }
         // to enable seeking of audio from seekbar
-        binding.seekBarEpisode.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        binding.seekBarEpisode.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                if(p2 && load.isCompleted){
+                if (p2 && load.isCompleted) {
                     mediaPlayer!!.seekTo(p1)
                 }
             }
@@ -104,19 +105,19 @@ class Player : AppCompatActivity() {
         })
 
         binding.imgPrev.setOnClickListener {
-            if (load.isCompleted){
+            if (load.isCompleted) {
                 val newTime = mediaPlayer!!.currentPosition - 5000
-                if (newTime>0){
+                if (newTime > 0) {
                     mediaPlayer!!.seekTo(newTime)
-                }else{
+                } else {
                     mediaPlayer!!.seekTo(0)
                 }
             }
         }
         binding.imgNext.setOnClickListener {
-            if (load.isCompleted){
+            if (load.isCompleted) {
                 val newTime = mediaPlayer!!.currentPosition + 5000
-                if (newTime<mediaPlayer!!.duration){
+                if (newTime < mediaPlayer!!.duration) {
                     mediaPlayer!!.seekTo(newTime)
                 }
             }
@@ -125,12 +126,12 @@ class Player : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(!load.isCompleted){
+        if (!load.isCompleted) {
             load
         }
     }
 
-    private fun play(){
+    private fun play() {
         state = false
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_pause_24)
         binding.progressBar.visibility = View.VISIBLE // to show loading till the prepare() is ready
@@ -147,7 +148,7 @@ class Player : AppCompatActivity() {
                             binding.seekBarEpisode.progress = mediaPlayer!!.currentPosition
                             binding.txtCurrent.text = convert(binding.seekBarEpisode.progress)
                             handler.postDelayed(this, 1000)
-                            if (!mediaPlayer!!.isPlaying){
+                            if (!mediaPlayer!!.isPlaying) {
                                 binding.imgPlay.setImageResource(R.drawable.ic_baseline_play_arrow_black)
                                 state = true
                             }
@@ -161,14 +162,15 @@ class Player : AppCompatActivity() {
 
     }
 
-    private fun pause(){
+    private fun pause() {
         state = true
         binding.imgPlay.setImageResource(R.drawable.ic_baseline_play_arrow_black)
         mediaPlayer?.pause()
     }
 
-    fun convert(duration:Int): String { // to convert mill sec to minutes and seconds
-        return String.format("%02d:%02d",TimeUnit.MILLISECONDS.toMinutes(duration.toLong()),
+    fun convert(duration: Int): String { // to convert mill sec to minutes and seconds
+        return String.format(
+            "%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(duration.toLong()),
             TimeUnit.MILLISECONDS.toSeconds(duration.toLong()) -
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration.toLong()))
         )
@@ -182,11 +184,11 @@ class Player : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(state){
+        if (state) {
             mediaPlayer?.release()
             mediaPlayer = null
             super.onBackPressed()
-        }else{
+        } else {
             MaterialAlertDialogBuilder(this).setTitle("Stop the player?")
                 .setMessage("Going Back will stop the podcast, do you still want to go back?")
                 .setPositiveButton("Yes") { _, _ ->
@@ -194,7 +196,7 @@ class Player : AppCompatActivity() {
                     mediaPlayer = null
                     super.onBackPressed()
                 }
-                .setNegativeButton("No"){ _, _ ->
+                .setNegativeButton("No") { _, _ ->
                 }
                 .create()
                 .show()

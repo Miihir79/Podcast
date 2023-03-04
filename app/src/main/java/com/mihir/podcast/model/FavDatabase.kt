@@ -5,21 +5,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [SearchClass::class],version = 1,exportSchema = false)
-abstract class FavDatabase: RoomDatabase() {
+@Database(entities = [SearchClass::class], version = 1, exportSchema = false)
+abstract class FavDatabase : RoomDatabase() {
 
-    abstract fun FavDao():FavInterface
+    abstract fun favDao(): FavInterface
 
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE: FavDatabase?=null
+        private var INSTANCE: FavDatabase? = null
 
-        fun getDatabase(context: Context):FavDatabase{
+        fun getDatabase(context: Context): FavDatabase {
             val tempInstance = INSTANCE
-            if (tempInstance!= null){
+            if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this){
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavDatabase::class.java,

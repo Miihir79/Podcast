@@ -9,7 +9,7 @@ interface FavInterface {
     suspend fun addFav(searchClass: SearchClass)
 
     @Query("SELECT * FROM fav_table")
-    fun getFavs():LiveData<List<SearchClass>>
+    fun getFavs(): LiveData<List<SearchClass>>
 
     @Delete
     suspend fun deleteFav(searchClass: SearchClass)
