@@ -6,6 +6,7 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.mihir.podcast.INTENT_KEY_SEARCH
 import com.mihir.podcast.adapter.EpisodesAdapter
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.remote.RssFeedResponse
@@ -17,9 +18,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PodcastDetails : AppCompatActivity() {
+
     private val binding by lazy { ActivityPodcastDetailsBinding.inflate(layoutInflater) }
     private lateinit var imgUrl: String
     private lateinit var response: RssFeedResponse
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(window) {
@@ -32,7 +35,7 @@ class PodcastDetails : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.progressBar2.visibility = View.GONE
-        val intent = intent.getSerializableExtra("Search") as SearchClass
+        val intent = intent.getSerializableExtra(INTENT_KEY_SEARCH) as SearchClass
         val title = intent.name
         imgUrl = intent.imageUrl.toString()
         val feedUrl = intent.feedUrl

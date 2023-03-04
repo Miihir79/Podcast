@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.mihir.podcast.CONFIRMATION_LIKE_SAVED
+import com.mihir.podcast.INTENT_KEY_SEARCH
+import com.mihir.podcast.USER_ACTION_ADD_LIKED_ITEM
+import com.mihir.podcast.USER_ACTION_REMOVE_LIKED_ITEM
 import com.mihir.podcast.adapter.SearchResultAdapter
 import com.mihir.podcast.model.FavViewModel
 import com.mihir.podcast.model.SearchClass
@@ -38,12 +43,22 @@ class SearchResult : AppCompatActivity() {
         setContentView(binding.root)
         binding.searchView.isIconified = false // to open keyboard in search view
 
-        myAdapter = SearchResultAdapter(this, viewModel, false) { searchItem, pair1, pair2 ->
+        myAdapter = SearchResultAdapter(false, { searchItem, pair1, pair2 ->
             val intent = Intent(this, PodcastDetails::class.java)
-            intent.putExtra("Search", searchItem)
+            intent.putExtra(INTENT_KEY_SEARCH, searchItem)
             val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2)
             startActivity(intent, transition.toBundle())
-        }
+        }, { searchItem, action ->
+            when (action) {
+                USER_ACTION_ADD_LIKED_ITEM -> {
+                    viewModel.addFav(searchItem)
+                    Toast.makeText(this, CONFIRMATION_LIKE_SAVED, Toast.LENGTH_SHORT).show()
+                }
+                USER_ACTION_REMOVE_LIKED_ITEM -> {
+                    viewModel.deleteFav(searchItem)
+                }
+            }
+        })
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(text: String?): Boolean {

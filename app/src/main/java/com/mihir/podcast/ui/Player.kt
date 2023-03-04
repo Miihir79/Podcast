@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.mihir.podcast.INTENT_KEY_EPISODE
+import com.mihir.podcast.INTENT_KEY_NAME
+import com.mihir.podcast.INTENT_KEY_URL
 import com.mihir.podcast.helper.HtmlUtils
 import com.mihir.podcast.remote.RssFeedResponse
 import com.mihir.podcast.ui.databinding.ActivityPlayerBinding
@@ -23,6 +26,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class Player : AppCompatActivity() {
+
     private val binding by lazy { ActivityPlayerBinding.inflate(layoutInflater) }
     private var state: Boolean = true //(true)->paused state[image of play] ; (false)->playing state [image of pause]
     private lateinit var podcastURL: String
@@ -55,9 +59,9 @@ class Player : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(binding.root)
 
-        val episode = intent.getSerializableExtra("episode") as RssFeedResponse.EpisodeResponse
-        val podName = intent.getStringExtra("name")
-        val url = intent.getStringExtra("url")
+        val episode = intent.getSerializableExtra(INTENT_KEY_EPISODE) as RssFeedResponse.EpisodeResponse
+        val podName = intent.getStringExtra(INTENT_KEY_NAME)
+        val url = intent.getStringExtra(INTENT_KEY_URL)
 
         binding.txtPlayerEpTitle.text = episode.title
         binding.txtPlayerDescription.text = episode.description?.let { HtmlUtils.htmlToSpannable(it) }

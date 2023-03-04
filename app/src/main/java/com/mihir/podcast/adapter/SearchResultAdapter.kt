@@ -1,27 +1,25 @@
 package com.mihir.podcast.adapter
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.mihir.podcast.USER_ACTION_ADD_LIKED_ITEM
+import com.mihir.podcast.USER_ACTION_REMOVE_LIKED_ITEM
 import com.mihir.podcast.helper.DateUtils
-import com.mihir.podcast.model.FavViewModel
 import com.mihir.podcast.model.SearchClass
 import com.mihir.podcast.ui.R
 import com.mihir.podcast.ui.databinding.ItemSubscriptionBinding
 
 class SearchResultAdapter(
-    private val activity: Activity,
-    private val viewModel: FavViewModel,
     private val isFavCall: Boolean,
-    private val onItemClicked: ((searchItem: SearchClass, pair1: Pair<View, String>, pair2: Pair<View, String>) -> Unit)
+    private val onItemClicked: ((searchItem: SearchClass, pair1: Pair<View, String>, pair2: Pair<View, String>) -> Unit),
+    private val onLikeButtonClicked: ((searchItem:SearchClass, action:String) -> Unit)
 ) : ListAdapter<SearchClass, SearchResultAdapter.ViewHolder>(ItemCallback) {
 
     object ItemCallback : DiffUtil.ItemCallback<SearchClass>() {
@@ -48,9 +46,9 @@ class SearchResultAdapter(
         Glide.with(holder.image.context).load(currentList[position].imageUrl).placeholder(R.drawable.loading).into(holder.image)
         holder.title.text = currentList[position].name
         if (currentList[position].isLiked) {
-            holder.like.background = AppCompatResources.getDrawable(activity, R.drawable.iosheart)
+            holder.like.background = AppCompatResources.getDrawable(holder.itemView.context, R.drawable.iosheart)
         } else {
-            holder.like.background = AppCompatResources.getDrawable(activity, R.drawable.ic_icon_ionic_md_heart_empty)
+            holder.like.background = AppCompatResources.getDrawable(holder.itemView.context, R.drawable.ic_icon_ionic_md_heart_empty)
         }
         holder.updated.text = currentList[position].lastUpdated.let {
             DateUtils.jsonDateToShortDate(jsonDate = it)
@@ -63,15 +61,14 @@ class SearchResultAdapter(
         holder.like.setOnClickListener {
             if (isFavCall) {    // is called form fav page (so delete if clicked on the fav button)
                 currentList[position].isLiked = false
-                viewModel.deleteFav(currentList[position])
+                onLikeButtonClicked(currentList[position], USER_ACTION_REMOVE_LIKED_ITEM)
             } else {    // called from search page
                 if (currentList[position].isLiked) {
                     currentList[position].isLiked = false
-                    viewModel.deleteFav(currentList[position])
+                    onLikeButtonClicked(currentList[position], USER_ACTION_REMOVE_LIKED_ITEM)
                 } else {
                     currentList[position].isLiked = true
-                    viewModel.addFav(currentList[position])
-                    Toast.makeText(activity, "Added to liked", Toast.LENGTH_SHORT).show()
+                    onLikeButtonClicked(currentList[position], USER_ACTION_ADD_LIKED_ITEM)
                 }
                 notifyItemChanged(position)
             }

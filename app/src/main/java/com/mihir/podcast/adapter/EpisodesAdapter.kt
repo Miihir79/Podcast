@@ -9,6 +9,9 @@ import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
+import com.mihir.podcast.INTENT_KEY_EPISODE
+import com.mihir.podcast.INTENT_KEY_NAME
+import com.mihir.podcast.INTENT_KEY_URL
 import com.mihir.podcast.helper.DateUtils
 import com.mihir.podcast.helper.HtmlUtils
 import com.mihir.podcast.remote.RssFeedResponse
@@ -45,9 +48,9 @@ class EpisodesAdapter(
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, Player::class.java)
             val episode = list.episodes?.get(position)
-            intent.putExtra("name", list.title)
-            intent.putExtra("episode", episode)
-            intent.putExtra("url", Url)
+            intent.putExtra(INTENT_KEY_NAME, list.title)
+            intent.putExtra(INTENT_KEY_EPISODE, episode)
+            intent.putExtra(INTENT_KEY_URL, Url)
             val pair1 = Pair.create<View, String>(imgVPodcastImg, "img_small")
             val pair2 = Pair.create<View, String>(txtPodcastTitle, "title")
             val pair3 = Pair.create<View, String>(holder.title, "podName")
