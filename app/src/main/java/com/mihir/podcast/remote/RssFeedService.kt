@@ -1,5 +1,6 @@
 package com.mihir.podcast.remote
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.mihir.podcast.ui.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,6 +30,7 @@ class RssFeedService private constructor() {
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
+            .addNetworkInterceptor(StethoInterceptor())
 
         if (BuildConfig.DEBUG) {
             client.addInterceptor(interceptor)
