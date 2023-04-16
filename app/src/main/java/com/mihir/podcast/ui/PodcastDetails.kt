@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
-import com.bumptech.glide.Glide
+import coil.load
 import com.mihir.podcast.INTENT_KEY_EPISODE
 import com.mihir.podcast.INTENT_KEY_NAME
 import com.mihir.podcast.INTENT_KEY_SEARCH
@@ -45,7 +45,7 @@ class PodcastDetails : AppCompatActivity() {
         val title = intent.name
         imgUrl = intent.imageUrl.toString()
         val feedUrl = intent.feedUrl
-        Glide.with(this).load(imgUrl).into(binding.imgVPodcastImg)
+        binding.imgVPodcastImg.load(imgUrl)
         binding.txtPodcastTitle.text = title
 
         CoroutineScope(Dispatchers.Main).launch {

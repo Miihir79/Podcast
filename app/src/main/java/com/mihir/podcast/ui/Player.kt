@@ -12,7 +12,7 @@ import android.view.Window
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
+import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mihir.podcast.INTENT_KEY_EPISODE
 import com.mihir.podcast.INTENT_KEY_NAME
@@ -68,7 +68,7 @@ class Player : AppCompatActivity() {
         podcastURL = episode.url.toString()
 
         binding.txtPlayerTitle.text = podName
-        Glide.with(binding.episodeImageView.context).load(url).into(binding.episodeImageView)
+        binding.episodeImageView.load(url)
         binding.txtTotal.text = episode.duration
 
         binding.imgPlay.setOnClickListener {

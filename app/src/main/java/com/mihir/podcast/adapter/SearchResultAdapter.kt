@@ -8,7 +8,7 @@ import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.mihir.podcast.USER_ACTION_ADD_LIKED_ITEM
 import com.mihir.podcast.USER_ACTION_REMOVE_LIKED_ITEM
 import com.mihir.podcast.helper.DateUtils
@@ -43,7 +43,9 @@ class SearchResultAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.image.context).load(currentList[position].imageUrl).placeholder(R.drawable.loading).into(holder.image)
+        holder.image.load(currentList[position].imageUrl) {
+            placeholder(R.drawable.loading)
+        }
         holder.title.text = currentList[position].name
         if (currentList[position].isLiked) {
             holder.like.background = AppCompatResources.getDrawable(holder.itemView.context, R.drawable.iosheart)
